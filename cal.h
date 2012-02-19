@@ -19,6 +19,6 @@ int output[6][7];
 
 int leapYear(int);
 void makeOutput(int, int, int, int);
-void printOutput(char*, int);
+void printOutput(char*, int, int);
 void monthlyOutput(int, int, int, int);
 #endif

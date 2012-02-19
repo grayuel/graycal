@@ -40,8 +40,10 @@ int main(int argc, char *argv[])
                     break;
             }
         }
+        else
+            makeOutput(year, wday, month, day);
     }
-    printOutput(&colors[0][0], wday);
+    printOutput(&colors[0][0], wday, day);
 
     return 0;
 }

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "cal.h"
 
-void printOutput(char *colors, int wday)
+void printOutput(char *colors, int wday, int day)
 {
     int i,j;
     extern int output[6][7];
@@ -19,10 +19,18 @@ void printOutput(char *colors, int wday)
         printf("%s ",dayw[i]);
     printf("\n");
 
-    for(j = 0; j < 5; j++) {
+    int lines = 5;
+    if(output[5][6] == 0 && output[5][0] != 0)
+        lines = 6;
+
+    int check = 0;
+
+    for(j = 0; j < lines; j++) {
         for(i = 0; i < 7; ++i)
-            if(j == 0 && i == wday)
+            if(check == 0 && output[j][i] == day) {
                 printf("%s %2d %s", todayColor, output[j][i], daysColor);
+                check++;
+            }
             else if(output[j][i] != 0)
                 printf(" %2d ",output[j][i]);
             else

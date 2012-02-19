@@ -19,30 +19,36 @@ int main(int argc, char *argv[])
     int i;
     char colors[4][LENGTH] = {GRAY, WHITE, GREEN, RESET};
 
+    char *optString = "mc?h";
+
     if(argc == 1)
         makeOutput(year, wday, month, day);
 
-    for(i = 1; i < argc; i++) {
-        if(argv[i][0] == '-') {
-            switch(argv[1][1]) {
-                case 'c':
-                    strcpy(colors[0], CDGRAY);
-                    strcpy(colors[1], CLGRAY);
-                    strcpy(colors[2], CHIGHLIGHT);
-                    strcpy(colors[3], CDGRAY);
-                    makeOutput(year, wday, month, day);
-                    break;
-                case 'm':
-                    monthlyOutput(year, wday, month, day);
-                    break;
-                default:
-                    makeOutput(year, wday, month, day);
-                    break;
-            }
+
+    int opt = getopt(argc, argv, optString);
+    while(opt != -1) {
+        switch(opt) {
+            case 'm':
+                monthlyOutput(year, wday, month, day);
+                break;
+            case 'c':
+                strcpy(colors[0], CDGRAY);
+                strcpy(colors[1], CLGRAY);
+                strcpy(colors[2], CHIGHLIGHT);
+                strcpy(colors[3], CDGRAY);
+                makeOutput(year, wday, month, day);
+                break;
+            case '?': case 'h':
+                //printUsage();
+                printf("Help will be here");
+                break;
+            default:
+                printf("This shouldn't happen");
+                break;
         }
-        else
-            makeOutput(year, wday, month, day);
+        opt = getopt(argc, argv, optString);
     }
+
     printOutput(&colors[0][0], wday, day);
 
     return 0;

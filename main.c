@@ -19,6 +19,9 @@ int main(int argc, char *argv[])
     int i;
     char colors[4][LENGTH] = {GRAY, WHITE, GREEN, RESET};
 
+    if(argc == 1)
+        makeOutput(year, wday, month, day);
+
     for(i = 1; i < argc; i++) {
         if(argv[i][0] == '-') {
             switch(argv[1][1]) {
@@ -27,13 +30,17 @@ int main(int argc, char *argv[])
                     strcpy(colors[1], CLGRAY);
                     strcpy(colors[2], CHIGHLIGHT);
                     strcpy(colors[3], CDGRAY);
+                    makeOutput(year, wday, month, day);
+                    break;
+                case 'm':
+                    monthlyOutput(year, wday, month, day);
                     break;
                 default:
+                    makeOutput(year, wday, month, day);
                     break;
             }
         }
     }
-    makeOutput(year, wday, month, day);
     printOutput(&colors[0][0], wday);
 
     return 0;

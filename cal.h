@@ -15,8 +15,10 @@
 #define CLGRAY "${color #707070}"
 #define CHIGHLIGHT "${color #e04613}"
 
-int output[5][7];
+int output[6][7];
 
+int leapYear(int);
 void makeOutput(int, int, int, int);
 void printOutput(char*, int);
+void monthlyOutput(int, int, int, int);
 #endif

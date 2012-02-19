@@ -3,11 +3,9 @@
 
 void makeOutput(int year, int wday, int month, int day)
 {
-    extern int output[5][7];
+    extern int output[6][7];
     int i, j;
-    int daymon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-        if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
-            daymon[1] = 29;
+    int daymon[12] = {31,leapYear(year),31,30,31,30,31,31,30,31,30,31};
 
 // first line
     for(i = 0; i < 7; i++) {

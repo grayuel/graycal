@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <unistd.h>
 #include "cal.h"
 
 
@@ -20,12 +21,13 @@ int main(int argc, char *argv[])
 
     char colors[4][LENGTH] = {GRAY, WHITE, GREEN, RESET};
 
-    char *optString = "mc?h";
+    char *optString = "mc::?h";
 
 
 
 
-    extern int opterr;
+//    extern int opterr;
+
     opterr = 0;
 
     int cflag = 0;
@@ -33,14 +35,18 @@ int main(int argc, char *argv[])
     int hflag = 0;
     int errflag = 0;
 
-    int opt = getopt(argc, argv, optString);
-    while(opt != -1) {
+    int howMany = 0;
+
+    int opt;
+    while((opt = getopt(argc, argv, optString)) != -1)
         switch(opt) {
             case 'm':
                 mflag++;
                 break;
             case 'c':
                 cflag++;
+                if(optarg != NULL)
+                    howMany = atoi(optarg);
                 break;
             case 'h':
                 hflag++;
@@ -49,12 +55,10 @@ int main(int argc, char *argv[])
                 errflag++;
                 break;
         }
-        opt = getopt(argc, argv, optString);
-    }
 
     if(errflag == 0 && cflag + mflag + hflag == 1) {
         if(mflag)
-            monthlyOutput(year, wday, month, day);
+            calculateMonth(year, month, howMany);
         else if(cflag) {
             strcpy(colors[0], CDGRAY);
             strcpy(colors[1], CLGRAY);

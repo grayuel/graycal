@@ -6,6 +6,8 @@
 
 int main(int argc, char *argv[])
 {
+    const char name[] = "graycal";
+
     struct tm *t;
     time_t now;
     time(&now);
@@ -16,40 +18,62 @@ int main(int argc, char *argv[])
     int month = t-> tm_mon; /* 0 to 11 */
     int wday = t->tm_wday; /* 0 to 6 */
 
-    int i;
     char colors[4][LENGTH] = {GRAY, WHITE, GREEN, RESET};
 
     char *optString = "mc?h";
 
-    if(argc == 1)
-        makeOutput(year, wday, month, day);
 
+
+
+    extern int opterr;
+    opterr = 0;
+
+    int cflag = 0;
+    int mflag = 0;
+    int hflag = 0;
+    int errflag = 0;
 
     int opt = getopt(argc, argv, optString);
     while(opt != -1) {
         switch(opt) {
             case 'm':
-                monthlyOutput(year, wday, month, day);
+                mflag++;
                 break;
             case 'c':
-                strcpy(colors[0], CDGRAY);
-                strcpy(colors[1], CLGRAY);
-                strcpy(colors[2], CHIGHLIGHT);
-                strcpy(colors[3], CDGRAY);
-                makeOutput(year, wday, month, day);
+                cflag++;
                 break;
-            case '?': case 'h':
-                //printUsage();
-                printf("Help will be here");
+            case 'h':
+                hflag++;
                 break;
             default:
-                printf("This shouldn't happen");
+                errflag++;
                 break;
         }
         opt = getopt(argc, argv, optString);
     }
 
-    printOutput(&colors[0][0], wday, day);
+    if(errflag == 0 && cflag + mflag + hflag == 1) {
+        if(mflag)
+            monthlyOutput(year, wday, month, day);
+        else if(cflag) {
+            strcpy(colors[0], CDGRAY);
+            strcpy(colors[1], CLGRAY);
+            strcpy(colors[2], CHIGHLIGHT);
+            strcpy(colors[3], CDGRAY);
+            makeOutput(year, wday, month, day);
+        }
+        else if(hflag) {
+            //printHelp();
+            printf("Help will be here\n");
+        }
+    }
+    else if(cflag + mflag + hflag + errflag == 0)
+        makeOutput(year, wday, month, day);
+    else
+        printf("Ivalid options, use %s -h for help\n",name);
 
+
+
+    printOutput(&colors[0][0], wday, day);
     return 0;
 }

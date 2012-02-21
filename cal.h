@@ -17,7 +17,7 @@
 
 int output[6][7];
 
-void calculateMonth(int, int, int);
+void calculateMonth(int, int, int, int);
 int leapYear(int);
 void makeOutput(int, int, int, int);
 void printOutput(char*, int, int);

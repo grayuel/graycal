@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     char colors[4][LENGTH] = {GRAY, WHITE, GREEN, RESET};
 
-    char *optString = "mc::?h";
+    char *optString = "m::c?h";
 
 
 
@@ -42,11 +42,11 @@ int main(int argc, char *argv[])
         switch(opt) {
             case 'm':
                 mflag++;
+                if(optarg != NULL)
+                    howMany = atoi(optarg);
                 break;
             case 'c':
                 cflag++;
-                if(optarg != NULL)
-                    howMany = atoi(optarg);
                 break;
             case 'h':
                 hflag++;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
     if(errflag == 0 && cflag + mflag + hflag == 1) {
         if(mflag)
-            calculateMonth(year, month, howMany);
+            calculateMonth(year, month, day, howMany);
         else if(cflag) {
             strcpy(colors[0], CDGRAY);
             strcpy(colors[1], CLGRAY);

@@ -11,9 +11,9 @@
 
 #define LENGTH 30
 
-#define CDGRAY "${color}"
-#define CLGRAY "${color #707070}"
-#define CHIGHLIGHT "${color #e04613}"
+#define CDGRAY "${color2}"
+#define CLGRAY "${color0}"
+#define CHIGHLIGHT "${color1}"
 
 int output[6][7];
 

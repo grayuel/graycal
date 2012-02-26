@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         }
     }
     else if(cflag + mflag + hflag + errflag == 0)
-        makeOutput(year, wday, month, day);
+        weeksOutput(year, wday, month, day);
     else
         printf("Ivalid options, use %s -h for help\n",name);
 

@@ -87,7 +87,6 @@ void print(int count, int initDay)
 
         if(dow(count++) == 6)
             printf("\n");
-        printf("%s", reset);
     }
 }
 
@@ -117,7 +116,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-
-
-

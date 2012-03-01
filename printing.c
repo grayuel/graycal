@@ -2,7 +2,7 @@
 
 #define CGRAY "${color2}"
 #define CWHITE "${color0}"
-#define CGREEN "${color1}
+#define CGREEN "${color1}"
 #define CRESET "${color0}"
 
 #define GRAY "\033[0;37m"
@@ -12,7 +12,7 @@
 
 void printHeading(char *titleColor)
 {
-    printf("%sSun Mon Tue Wed Thu Fri Sat\n", *titleColor);
+    printf("%sSun Mon Tue Wed Thu Fri Sat\n", titleColor);
 }
 
 void printWeeks(int count, int initDay, char *todayColor, char *futureColor, char *reset)

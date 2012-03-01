@@ -88,6 +88,7 @@ int print(int, int, int);
 int main(int argc, char *argv[])
 {
     int initDay;
+    int outType = 0;
 
     if(argc == 4 && isdigit(argv[1][0])
                     && isdigit(argv[2][0])
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
 
     int count = initDay - dow(initDay);
 
-    printWeeks(count, initDay);
+    print(count, initDay, outType);
 
     return 0;
 }

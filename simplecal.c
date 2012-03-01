@@ -18,7 +18,11 @@ int num(int year, int month, int day)
     int i,n;
 
     int dayMon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-    n = (year - 1980)*365 + (year - 1977)/4 - (year - 2000)/100 + (year - 2000)/400;
+    
+    n = (year - 1980)*365 
+        + (year - 1977)/4 
+        - (year - 2001)/100 
+        + (year - 2001)/400;
 
     if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
         dayMon[1]++;
@@ -110,7 +114,9 @@ int main(int argc, char *argv[])
 {
     int initDay;
 
-    if(argc == 4 && isdigit(argv[1][0]) &&  isdigit(argv[2][0]) && isdigit(argv[3][0]))
+    if(argc == 4 && isdigit(argv[1][0]) 
+                    && isdigit(argv[2][0]) 
+                        && isdigit(argv[3][0]))
         initDay = num(atoi(argv[1]), atoi(argv[2])-1, atoi(argv[3]));
     else {
         initDay = todaysDate(); 

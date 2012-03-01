@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <time.h>
 
 #define GRAY "${color2}"
 #define WHITE "${color0}"
@@ -90,26 +91,31 @@ void print(int count, int initDay)
     }
 }
 
+
+
+
+
+//default date, todays date
+int todaysDate(void)
+{
+    struct tm *t;
+    time_t now;
+    time(&now);
+    t=localtime(&now);
+
+    return num(t->tm_year + 1900, t->tm_mon, t->tm_mday);
+}
+
 int main(int argc, char *argv[])
 {
-    int year;
-    int month;
-    int day;
+    int initDay;
 
-    if(argc == 4) {
-        if(isdigit(argv[1][0]))
-            year = atoi(argv[1]);
-        if(isdigit(argv[2][0]))
-            month = atoi(argv[2])-1;
-        if(isdigit(argv[3][0]))
-            day = atoi(argv[3]);
-    }
+    if(argc == 4 && isdigit(argv[1][0]) &&  isdigit(argv[2][0]) && isdigit(argv[3][0]))
+        initDay = num(atoi(argv[1]), atoi(argv[2])-1, atoi(argv[3]));
     else {
-        printf("Bad input");
-        return 1;
+        initDay = todaysDate(); 
     }
 
-    int initDay = num(year, month, day);
     int count = initDay - dow(initDay);
 
     print(count, initDay);

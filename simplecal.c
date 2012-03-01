@@ -11,13 +11,17 @@
 //#define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
+
+
+
+
 //Convert a date into the number of days from Jan 1 1980.
 int num(int year, int month, int day)
 {
     int i,n;
 
     int dayMon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-    n = (year - 1980)*365 + (year - 1977)/4 - (year - 2000)/100 + (year - 2000)/400;
+    n = (year - 1980)*365 + (year - 1977)/4 - (year - 2001)/100 + (year - 2001)/400;
 
     if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
         dayMon[1]++;
@@ -29,11 +33,19 @@ int num(int year, int month, int day)
 }
 
 
+
+
+
+
 //Determine the day of the week. The 1 is there because it needs to be.
 int dow(int num)
 {
     return (num + 1) % 7;
 }
+
+
+
+
 
 
 
@@ -43,12 +55,13 @@ int num2day(int num)
     int n;
 
     int dayMon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-    int y = 1980;
-    while((y-1980) * 365 + (y-1977)/4 - (y-2000)/100 + (y-2000)/400 < num)
-        y++;
-    y--;
 
-    num -= ((y - 1980) * 365 + (y-1977)/4 - (y-2000)/100 + (y-2000)/400);
+//  (y-1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400 < num
+//  solve for y:
+    int y = 100*(4*num + 2892717) / 146097;
+
+
+    num -= ((y - 1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400);
 
      if(y % 400 == 0 || (y % 100 != 0 && y % 4 == 0))
         dayMon[1]++;
@@ -64,7 +77,11 @@ int num2day(int num)
 }
 
 
-void print(int count, int initDay)
+
+
+
+
+void printHeading(void)
 {
     int i;
     int todayReached = 0;
@@ -75,7 +92,18 @@ void print(int count, int initDay)
     char *reset = RESET;
 
 
-    printf("%sSun Mon Tue Wed Thu Fri Sat\n", titleColor);
+    printf(GRAY "Sun Mon Tue Wed Thu Fri Sat\n");
+}
+
+void printWeeks(int count, int initDay)
+{
+    int i;
+    int todayReached = 0;
+
+    char *todayColor = GREEN;
+    char *titleColor = GRAY;
+    char *futureColor = WHITE;
+    char *reset = RESET;
 
     for(i = 0; i < 35; i++) {
         if(!todayReached && dow(initDay) == dow(count)) {
@@ -89,6 +117,17 @@ void print(int count, int initDay)
             printf("\n");
     }
 }
+
+
+
+
+void printMonth(int count, int initDay, int month)
+{
+    int i;
+    int todayReached = 0;
+}
+
+
 
 int main(int argc, char *argv[])
 {

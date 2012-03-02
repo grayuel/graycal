@@ -56,11 +56,19 @@ void destroySettings(struct printSettings *temp)
 
 
 
+
+
+
+
+
+//print the day names
 void printHeading(char *titleColor)
 {
     printf("%sSun Mon Tue Wed Thu Fri Sat\n", titleColor);
 }
 
+
+//print the next 5 weeks
 void printWeeks(struct printSettings *a)
 {
     int i;
@@ -81,11 +89,48 @@ void printWeeks(struct printSettings *a)
     printf("%s", a->reset);
 }
 
+
+//print the current month
+void printMonth(struct printSettings *a)
+{
+    int count = a->today - num2day(a->today) + 1;
+    int todayReached = 0;
+
+    int i;
+
+    for(i = 0; i < dow(count); i++)
+        printf("    ");
+
+    int now = num2day(count);
+    int then = 0;
+
+    while(now > then) {
+        if(!todayReached && count == a->today) {
+            printf("%s %2d %s", a->todayColor, num2day(a->today), a->future);
+            todayReached = 1;
+        }
+        else
+            printf(" %2d ", num2day(count));
+
+        if(dow(count) == 6)
+            printf("\n");
+
+        then = now;
+        now = num2day(++count);
+    }
+}
+
+
+
+
+
+
 void print(int count, int initDay, int outType)
 {
     struct printSettings *setPrint = createSettings(count, initDay, outType);
 
     printHeading(setPrint->title);
-    printWeeks(setPrint);
+//    printWeeks(setPrint);
+    printMonth(setPrint);
     destroySettings(setPrint);
 }

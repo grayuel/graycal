@@ -4,7 +4,6 @@
 #include <time.h>
 
 
-
 //Convert a date into the number of days from Jan 1 1980.
 int num(int year, int month, int day)
 {
@@ -54,8 +53,8 @@ int num2day(int num)
 
     num -= ((y - 1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400);
 
-     if(y % 400 == 0 || (y % 100 != 0 && y % 4 == 0))
-        dayMon[1]++;
+    if(y % 400 == 0 || (y % 100 != 0 && y % 4 == 0))
+       dayMon[1]++;
 
 
     n = 0;
@@ -83,7 +82,7 @@ int todaysDate(void)
 }
 
 
-int print(int, int, int);
+void print(int, int, int);
 
 int main(int argc, char *argv[])
 {
@@ -91,8 +90,7 @@ int main(int argc, char *argv[])
     int outType = 0;
 
     if(argc == 4 && isdigit(argv[1][0])
-                    && isdigit(argv[2][0])
-                        && isdigit(argv[3][0]))
+            && isdigit(argv[2][0]) && isdigit(argv[3][0]))
         initDay = num(atoi(argv[1]), atoi(argv[2])-1, atoi(argv[3]));
     else {
         initDay = todaysDate();

@@ -91,7 +91,7 @@ int todaysDate(void)
 
 void print(int, int, char**);
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     int initDay = todaysDate();
 

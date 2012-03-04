@@ -123,29 +123,35 @@ void printMonth(struct printSettings *a)
 
 
 
-void print(int initDay, int argc, char *argv)
+void print(int initDay, int argc, char **argv)
 {
+    char *conkyHL = CHL;
+    char *conkyTitle = CGRAY;
+    char *conkyFuture = CWHITE;
+    char *conkyReset = CRESET;
+
+
+
     struct printSettings *setPrint = createSettings(initDay);
 
     int output = 0;
 
     int colorsAssigned = 0;
 
-    char *options = "cm:w::d::";
+    int c;
 
-
-    char c;
-
-    while((c = getopt (argc, argv, options)) != -1)
+    printf("Got this far");
+    while((c = getopt (argc, argv, "cm::w:d::")) != -1)
         switch (c)
         {
         case 'c':
+            printf("Got to c");
             if(colorsAssigned = 0)
             {
-                strcpy(setPrint->todayColor,CHL);
-                strcpy(setPrint->title, CGRAY);
-                strcpy(setPrint->future, CWHITE);
-                strcpy(setPrint->reset, CRESET);
+                setPrint->todayColor = &conkyHL;
+                setPrint->title = &conkyTitle;
+                setPrint->future = &conkyFuture;
+                setPrint->reset= &conkyReset;
                 colorsAssigned = 1;
             }
             break;
@@ -165,10 +171,10 @@ void print(int initDay, int argc, char *argv)
 
     if(colorsAssigned = 0)
     {
-        strcpy(setPrint->todayColor, HL);
-        strcpy(setPrint->title, GRAY);
-        strcpy(setPrint->future, WHITE);
-        strcpy(setPrint->reset, RESET);
+        setPrint->todayColor = &conkyHL;
+        setPrint->title = &conkyTitle;
+        setPrint->future = &conkyFuture;
+        setPrint->reset= &conkyReset;
     }
 
     printHeading(setPrint->title);

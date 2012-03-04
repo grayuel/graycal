@@ -31,7 +31,7 @@ struct printSettings *createSettings(int initDay)
 {
     struct printSettings *temp = malloc(sizeof(struct printSettings));
 
-    temp->howMany = 1;
+    temp->howMany = 5;
     temp->today = initDay;
 
     return temp;
@@ -123,66 +123,80 @@ void printMonth(struct printSettings *a)
 
 
 
-void print(int initDay, int argc, char **argv)
+int print(int initDay, int argc, char **argv)
 {
     char *conkyHL = CHL;
     char *conkyTitle = CGRAY;
     char *conkyFuture = CWHITE;
     char *conkyReset = CRESET;
 
+    char *hl = HL;
+    char *title = GRAY;
+    char *future = WHITE;
+    char *reset = RESET;
 
 
     struct printSettings *setPrint = createSettings(initDay);
 
     int output = 0;
+    int typeflag = 0;
 
     int colorsAssigned = 0;
-
     int c;
 
-    printf("Got this far");
-    while((c = getopt (argc, argv, "cm::w:d::")) != -1)
+    while((c = getopt (argc, argv, "cm::w:d:")) != -1)
         switch (c)
         {
         case 'c':
-            printf("Got to c");
-            if(colorsAssigned = 0)
+            if(colorsAssigned == 0)
             {
-                setPrint->todayColor = &conkyHL;
-                setPrint->title = &conkyTitle;
-                setPrint->future = &conkyFuture;
-                setPrint->reset= &conkyReset;
+                setPrint->todayColor = conkyHL;
+                setPrint->title = conkyTitle;
+                setPrint->future = conkyFuture;
+                setPrint->reset= conkyReset;
                 colorsAssigned = 1;
             }
             break;
         case 'm':
             output = 1;
-            if(isdigit(optarg))
+            typeflag++;
+            printf("%d\n", typeflag);
+            if(optarg != NULL)
                 setPrint->howMany = atoi(optarg);
+            else
+                setPrint->howMany = 1;
             break;
         case 'w':
-            if(isdigit(optarg))
+            typeflag++;
+            printf("%d\n",typeflag);
+            if(optarg != NULL)
                 setPrint->howMany = atoi(optarg);
             break;
         case 'd':
-            if(isdigit(optarg))
+            if(optarg != NULL)
                 setPrint->today = atoi(optarg);
         }
 
-    if(colorsAssigned = 0)
+    if(colorsAssigned == 0)
     {
-        setPrint->todayColor = &conkyHL;
-        setPrint->title = &conkyTitle;
-        setPrint->future = &conkyFuture;
-        setPrint->reset= &conkyReset;
+        setPrint->todayColor = hl;
+        setPrint->title = title;
+        setPrint->future = future;
+        setPrint->reset= reset;
+    }
+
+
+    if(typeflag > 1) {
+        printf("Bad input\n");
+        return 1;
     }
 
     printHeading(setPrint->title);
-
-    if(output = 0)
+    if(output == 0)
         printWeeks(setPrint);
-    else if(output = 1)
+    else if(output == 1)
         printMonth(setPrint);
 
     destroySettings(setPrint);
+    return 0;
 }

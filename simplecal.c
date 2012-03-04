@@ -93,7 +93,11 @@ int print(int, int, char**);
 
 int main(int argc, char **argv)
 {
-    int initDay = todaysDate();
+    int initDay;
+    if(argc == 4)
+        initDay = num(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+    else
+        initDay = todaysDate();
 
     print(initDay, argc, argv);
 

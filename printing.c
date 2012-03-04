@@ -175,6 +175,7 @@ int print(int initDay, int argc, char **argv)
         case 'd':
             if(optarg != NULL)
                 setPrint->today = atoi(optarg);
+            break;
         }
 
     if(colorsAssigned == 0)

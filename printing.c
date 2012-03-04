@@ -31,7 +31,7 @@ struct printSettings *createSettings(int initDay)
 {
     struct printSettings *temp = malloc(sizeof(struct printSettings));
 
-    temp->howMany = 5;
+    temp->howMany = 10;
     temp->today = initDay;
 
     return temp;

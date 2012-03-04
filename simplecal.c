@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 {
     int initDay;
     if(argc == 4)
-        initDay = num(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+        initDay = num(atoi(argv[1]), atoi(argv[2]) - 1, atoi(argv[3]));
     else
         initDay = todaysDate();
 

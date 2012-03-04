@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
-
+#include <unistd.h>
 
 //Convert a date into the number of days from Jan 1 1980.
 int num(int year, int month, int day)
 {
+    year += month/12;
+    month = month % 12;
+
     int i,n;
 
     int dayMon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
@@ -82,23 +85,17 @@ int todaysDate(void)
 }
 
 
-void print(int, int, int);
+
+
+
+
+void print(int, int, char**);
 
 int main(int argc, char *argv[])
 {
-    int initDay;
-    int outType = 0;
+    int initDay = todaysDate();
 
-    if(argc == 4 && isdigit(argv[1][0])
-            && isdigit(argv[2][0]) && isdigit(argv[3][0]))
-        initDay = num(atoi(argv[1]), atoi(argv[2])-1, atoi(argv[3]));
-    else {
-        initDay = todaysDate();
-    }
-
-    int count = initDay - dow(initDay);
-
-    print(count, initDay, outType);
+    print(initDay, argc, argv);
 
     return 0;
 }

@@ -40,19 +40,14 @@ int dow(int num)
 }
 
 
-
-
-//Convert a the number of days from Jan 1 1980 to the day number
-int num2day(int num)
+int num2month(int num)
 {
-    int n;
-
     int dayMon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
-//  (y-1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400 < num
-//  solve for y:
-    int y = 100*(4*num + 2892717) / 146097;
-
+    int y = 0;
+    while((y-1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400 < num)
+        y++;
+    y--;
 
     num -= ((y - 1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400);
 
@@ -60,7 +55,34 @@ int num2day(int num)
        dayMon[1]++;
 
 
-    n = 0;
+    int n = 0;
+
+    while(num > 0)
+        num -= dayMon[n++];
+
+    return n;
+}
+
+
+
+//Convert a the number of days from Jan 1 1980 to the day number
+int num2day(int num)
+{
+
+    int dayMon[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    int y = 0;
+    while((y-1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400 < num)
+        y++;
+    y--;
+
+    num -= ((y - 1980) * 365 + (y-1977)/4 - (y-2001)/100 + (y-2001)/400);
+
+    if(y % 400 == 0 || (y % 100 != 0 && y % 4 == 0))
+       dayMon[1]++;
+
+
+    int n = 0;
 
     while(num > 0)
         num -= dayMon[n++];

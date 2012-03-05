@@ -63,18 +63,32 @@ void printWeeks(struct printSettings *a)
 {
     int todayReached = 0;
     int count = a->today - dow(a->today);
+    int newMonthFlag = 1;
+    int now = num2day(count);
+    int then = 0;
 
     int i;
     for(i = 0; i < 7*a->howMany; i++) {
         if(!todayReached && dow(a->today) == dow(count)) {
-            printf("%s %2d %s", a->todayColor, num2day(count), a->future);
+            printf("%s %2d %s", a->todayColor, now,  a->future);
             todayReached = 1;
         }
         else
-            printf(" %2d ", num2day(count));
+            printf(" %2d ", now);
 
-        if(dow(count++) == 6)
+
+        if(dow(count) == 6) {
+            if(newMonthFlag == 1) {
+                printf("    %d", num2month(count));
+                newMonthFlag = 0;
+            }
             printf("\n");
+        }
+        then = now;
+        now = num2day(++count);
+        if(now < then)
+            newMonthFlag = 1;
+
     }
     printf("%s", a->reset);
 }
@@ -87,6 +101,7 @@ void printMonth(struct printSettings *a)
 {
     int count = a->today - num2day(a->today) + 1;
     int todayReached = 0;
+    int newMonthFlag = 1;
 
     int monthCounter = 0;
 
@@ -106,14 +121,21 @@ void printMonth(struct printSettings *a)
         else
             printf(" %2d ", now);
 
-        if(dow(count) == 6)
+        if(dow(count) == 6) {
+            if(newMonthFlag == 1) {
+                printf("    %d", num2month(count));
+                newMonthFlag = 0;
+            }
             printf("\n");
+        }
 
         then = now;
         now = num2day(++count);
 
-        if(now < then)
+        if(now < then) {
             monthCounter++;
+            newMonthFlag = 1;
+        }
     }
     printf("\n");
 }
@@ -160,7 +182,6 @@ int print(int initDay, int argc, char **argv)
         case 'm':
             output = 1;
             typeflag++;
-            printf("%d\n", typeflag);
             if(optarg != NULL)
                 setPrint->howMany = atoi(optarg);
             else

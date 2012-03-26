@@ -31,7 +31,7 @@ struct printSettings *createSettings(int initDay)
 {
     struct printSettings *temp = malloc(sizeof(struct printSettings));
 
-    temp->howMany = 10;
+    temp->howMany = 5;
     temp->today = initDay;
 
     return temp;
@@ -189,7 +189,6 @@ int print(int initDay, int argc, char **argv)
             break;
         case 'w':
             typeflag++;
-            printf("%d\n",typeflag);
             if(optarg != NULL)
                 setPrint->howMany = atoi(optarg);
             break;
